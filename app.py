@@ -819,9 +819,13 @@ def render_backtest_tab(aktif_mod):
             </div>
             """, unsafe_allow_html=True)
             
-            # Eşleşen malfların detayı
+            # Eşleşen maçların detayı
             try:
-                detay_liste = json.loads(row["eslesen_detay"]) if row["eslesen_detay"] else []
+                raw_detay = row["eslesen_detay"]
+                if isinstance(raw_detay, str):
+                    detay_liste = json.loads(raw_detay) if raw_detay else []
+                else:
+                    detay_liste = raw_detay if raw_detay else []
             except:
                 detay_liste = []
             
