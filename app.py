@@ -76,11 +76,20 @@ SKORLAR = ["0-0", "1-0", "0-1", "1-1", "2-0", "0-2", "2-1", "1-2", "2-2", "3-0",
 @st.cache_resource
 def init_supabase() -> Client:
     try:
-        url = st.secrets["SUPABASE_URL"]
-        key = st.secrets["SUPABASE_KEY"]
+        url = os.environ.get("SUPABASE_URL")
+        if not url and hasattr(st, "secrets") and "SUPABASE_URL" in st.secrets:
+            url = st.secrets["SUPABASE_URL"]
+            
+        key = os.environ.get("SUPABASE_KEY")
+        if not key and hasattr(st, "secrets") and "SUPABASE_KEY" in st.secrets:
+            key = st.secrets["SUPABASE_KEY"]
+            
+        if not url or not key:
+            raise ValueError("SUPABASE_URL veya SUPABASE_KEY eksik")
+            
         return create_client(url, key)
     except Exception as e:
-        st.error(f"Supabase bağlantısı kurulamadı. Lütfen .streamlit/secrets.toml dosyanızı kontrol edin. Hata: {e}")
+        st.error(f"Supabase bağlantısı kurulamadı. Lütfen ortam değişkenlerini kontrol edin. Hata: {e}")
         st.stop()
 
 supabase = init_supabase()
