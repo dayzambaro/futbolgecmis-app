@@ -1,0 +1,5 @@
+.venv/
+mac_arsivi.db
+backups/
+.streamlit/secrets.toml
+__pycache__/

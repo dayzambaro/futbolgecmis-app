@@ -1,0 +1,10 @@
+[build]
+  # Netlify'ın uygulamanızı yayınlarken baz alacağı ana klasör (Deploy directory)
+  publish = "dist"
+  
+  # Netlify yayın işlemine başladığında dosyaları dist/ içine kopyalayacak
+  command = "mkdir -p dist && cp app.py dist/ && cp requirements.txt dist/ && cp -r .streamlit dist/"
+
+[build.environment]
+  # Supabase sunucusuna web üzerinden istek atılabilmesi için
+  NODE_VERSION = "18"

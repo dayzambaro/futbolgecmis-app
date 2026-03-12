@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Futbol Geçmişi Analizi</title>
+    <!-- stlite için gerekli betikler. Python'ı direkt tarayıcıda çalıştırır. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stlite/mountable@0.52.1/build/stlite.css" />
+  </head>
+  <body>
+    <!-- Streamlit arayüzünün gömüleceği alan -->
+    <div id="root" style="height: 100vh;"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@stlite/mountable@0.52.1/build/stlite.js"></script>
+    <script>
+      stlite.mount(
+        {
+          mainScriptData: `
+import os
+# Netlify üzerindeki dosyalar yüklendikten sonra Streamlit çağrılır
+with open("app.py", "r", encoding="utf-8") as f:
+    app_code = f.read()
+exec(app_code)
+`,
+          requirements: ["pandas", "openpyxl", "supabase"],
+        },
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>
